@@ -1,0 +1,39 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-toolbar.mat-primary{
+  background-color: #00194c;
+  color:white;
+}
+
+.consultant-btn{
+  background-color: #0055ff;
+}
+
+.logo{
+  position: relative;
+  height: 25px;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.margin-padding-0{
+  margin: 0px;
+  padding: 0px;
+}
+
+.font{
+  font-size: 0.9rem;
+  line-height: normal;
+}
+
+.bar{
+  position: relative;
+  height: 90%;
+  width: 2px;
+  background-color: white;
+  margin-left: 10px;
+  margin-right: 5px;
+  align-items: center;
+}
