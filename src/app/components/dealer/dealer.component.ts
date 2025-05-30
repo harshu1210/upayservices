@@ -227,7 +227,7 @@ export class DealerComponent implements OnInit, AfterViewInit {
 
   createElement() {
     this.formMessage = "Register Dealers Info";
-    this.editDealerForm = true;
+    this.createDealerForm = true;
   }
 
   deleteElement(event: any) {
