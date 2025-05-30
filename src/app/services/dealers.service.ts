@@ -14,6 +14,14 @@ export class DealersService {
     return this.http.get(`${this.baseUrl}getDealers`, { params: { page: page.toString(), size: size.toString() } });
   }
 
+  updateDealer(element: any) {
+    return this.http.put(`${this.baseUrl}updateDealer`, element);
+  }
+
+  createDealer(element: any) {
+    return this.http.post(`${this.baseUrl}createDealer`, element);
+  }
+
   deleteDealer(id: number) {
     return this.http.delete(`${this.baseUrl}deleteById/${id}`);
   }

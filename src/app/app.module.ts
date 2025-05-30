@@ -22,6 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 import { ServicesComponent } from './components/services/services.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.component';
+import { FormComponent } from './shared/form/form.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +33,8 @@ import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.comp
     SpinnerComponent,
     TableComponent,
     ServicesComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,9 @@ import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.comp
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    MatMenuModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

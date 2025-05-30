@@ -28,12 +28,13 @@ export class TableComponent implements OnInit {
   @Input() formToDisplay: { label: string, key: string }[] = []
   @Input() expandable: boolean = false;
   @Input() actions: boolean = false;
+  @Input() pageServices: any = [];
   @ViewChild(MatTable) table!: MatTable<any>;
 
   @Output() refresh: EventEmitter<PageEvent> = new EventEmitter();
   @Output() editing: EventEmitter<any> = new EventEmitter();
   @Output() deleting: EventEmitter<any> = new EventEmitter();
-
+  @Output() register: EventEmitter<any> = new EventEmitter();
   expandedElement: any = null;
 
   constructor() {
@@ -58,6 +59,12 @@ export class TableComponent implements OnInit {
 
   getNestedValue(obj: any, path: string): any {
     return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+  }
+
+  menuService(label: string) {
+    if (label == 'register') {
+      this.register.emit();
+    }
   }
 
 

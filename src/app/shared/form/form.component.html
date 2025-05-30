@@ -1,0 +1,42 @@
+<mat-dialog-content class="mat-typography" style="position:relative;height:90%;display:block;width:90%;overflow:auto;">
+    <h3>{{message}}</h3>
+    <form [formGroup]="form" style="display:flex;flex-wrap:wrap;gap:10px;">
+        <div *ngFor="let field of formCreation">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>{{ field.label }}</mat-label>
+
+                <input *ngIf="field.type === 'email'" matInput type="email" [formControl]="getFormControl(field.key)"
+                    [placeholder]="'Enter ' + field.label" />
+
+                <!-- Add other input types if needed -->
+                <input *ngIf="field.type === 'text'" matInput type="text" [formControl]="getFormControl(field.key)"
+                    [placeholder]="'Enter ' + field.label" />
+
+                <textarea *ngIf="field.type === 'textarea'" matInput [formControl]="getFormControl(field.key)"
+                    [placeholder]="'Enter ' + field.label"></textarea>
+
+                <mat-select *ngIf="field.type == 'select'" [formControl]="getFormControl(field.key)" multiple>
+                    <mat-option *ngFor="let service of services" [value]="service">{{service}}</mat-option>
+                </mat-select>
+
+                <!-- Validation errors -->
+                <mat-error *ngIf="getFormControl(field.key).hasError('required')">
+                    {{ field.label }} is <strong>required</strong>
+                </mat-error>
+
+                <mat-error
+                    *ngIf="getFormControl(field.key).hasError('email') && !getFormControl(field.key).hasError('required')">
+                    Please enter a valid {{ field.label }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <p>
+
+        </p>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close (click)="cancelProcess(false)">Cancel</button>
+    <button mat-button color="primary" (click)="onSubmit()" [mat-dialog-close]="true" [disabled]="form.invalid"
+        cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

@@ -23,35 +23,20 @@ export class ServicesComponent implements OnInit, AfterViewInit {
   deleteServiceElement: Service | null = null;
   deleteMessage: string = "";
   actions: boolean = false;
+  editServiceForm: boolean = false;
+  formMessage: string = "";
+  createServiceForm: boolean = false;
+  id: number | null = null;
+  newformCreation: { label: string, key: string, value: string, type: string, validation: string[] }[] = [
+    { label: "Service Name", key: "label", value: '', type: 'text', validation: ['required'] },
+  ]
+  formCreation: { label: string, key: string, value: string, type: string, validation: string[] }[] = [
+    { label: "Servie Name", key: "label", value: '', type: 'text', validation: ['required'] },
+  ]
+  pageServices: any = [{ label: "Register Service", icon: "add", value: "register" }]
+
   constructor(private servicesService: ServicesService, private toasterService: ToasterService, private breakpointObserver: BreakpointObserver) {
     this.initializeBreakpointObserver();
-  }
-
-  ngOnInit(): void {
-    this.getServices();
-  }
-
-  ngAfterViewInit(): void {
-    this.initializeBreakpointObserver();
-  }
-
-  refresh(event: any) {
-    this.pageEvent = { pageIndex: event.pageIndex, pageSize: event.pageSize, length: event.length };
-    this.getServices();
-  }
-
-  getServices() {
-    this.servicesService.getServicesList(this.pageEvent.pageIndex, this.pageEvent.pageSize).subscribe(
-      (data: any) => {
-        this.servicesData = data.content;
-        this.pageEvent = { pageIndex: data.number, pageSize: data.size, length: data.totalElements };
-        this.length = data.totalElements;
-        this.toasterService.success("Services Fetched Successfully")
-      },
-      (error: any) => {
-        this.toasterService.error(error.message);
-      }
-    );
   }
 
   private updateDisplayedColumnKeys() {
@@ -84,31 +69,68 @@ export class ServicesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  editElement(event: any) {
-    console.log(event);
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.initializeBreakpointObserver();
   }
 
-  deleteElement(event: any) {
-    this.deleteServiceElement = event;
-    this.deleteMessage = "Are you sure you want to delete the Service with Label: " + event.label;
-    this.deleteDialog = true;
-
+  ngOnInit(): void {
+    this.getServices();
   }
 
-  cancelProcess(event: any) {
-    this.deleteDialog = event;
-    this.deleteServiceElement = null;
+  ngAfterViewInit(): void {
+    this.initializeBreakpointObserver();
   }
 
-  deleteProcess(event: any) {
-    this.deleteDialog = false;
-    this.deleteServices();
-    this.deleteServiceElement = null;
+  refresh(event: any) {
+    this.pageEvent = { pageIndex: event.pageIndex, pageSize: event.pageSize, length: event.length };
+    this.getServices();
+  }
+
+  getServices() {
+    this.servicesService.getServicesList(this.pageEvent.pageIndex, this.pageEvent.pageSize).subscribe(
+      (data: any) => {
+        this.servicesData = data.content;
+        this.pageEvent = { pageIndex: data.number, pageSize: data.size, length: data.totalElements };
+        this.length = data.totalElements;
+        this.toasterService.success("Services Fetched Successfully")
+      },
+      (error: any) => {
+        this.toasterService.error(error.message);
+      }
+    );
+  }
+
+  createServices(element: any) {
+    this.servicesService.createService(element)
+      .pipe(finalize(() => this.getServices()))
+      .subscribe(
+        () => {
+          this.toasterService.success("Service Registered Successfully");
+        },
+        (error: any) => {
+          this.toasterService.error(error.message || "Request failed");
+        }
+      );
+  }
+
+  updateService(element: any) {
+    if (this.id) {
+      this.servicesService.updateService(element, this.id)
+        .pipe(finalize(() => this.getServices()))
+        .subscribe(
+          () => {
+            this.toasterService.success("Service Updated Successfully");
+          },
+          (error: any) => {
+            this.toasterService.error(error.message || "Request failed");
+          }
+        );
+    }
   }
 
   deleteServices() {
     if (this.deleteServiceElement) {
-      console.log(typeof this.deleteServiceElement.id);
       this.servicesService.deleteServices(this.deleteServiceElement.id)
         .pipe(finalize(() => this.getServices()))
         .subscribe(
@@ -123,9 +145,69 @@ export class ServicesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.initializeBreakpointObserver();
+  populateFormCreationValuesFromDealer(dealer: any): void {
+    this.formCreation.forEach(field => {
+      const key = field.key;
+      if (key.startsWith('bankDetails.')) {
+        const bankKey = key.split('.')[1];
+        field.value = dealer.bankDetails?.[bankKey] ?? '';
+      } else {
+        field.value = (dealer as any)[key] ?? '';
+      }
+    });
+    console.log(this.formCreation)
+  }
+
+  editElement(event: any) {
+    this.populateFormCreationValuesFromDealer(event);
+    this.formMessage = "Editing Service";
+    this.editServiceForm = true;
+    this.id = event.id;
+  }
+
+  createElement() {
+    this.formMessage = "Register Service";
+    this.createServiceForm = true;
+  }
+
+  deleteElement(event: any) {
+    this.deleteServiceElement = event;
+    this.deleteMessage = "Are you sure you want to delete the Service with Label: " + event.label;
+    this.deleteDialog = true;
+  }
+
+  cancelProcess(event: any) {
+    this.deleteDialog = event;
+    this.deleteServiceElement = null;
+  }
+
+  deleteProcess(event: any) {
+    this.deleteDialog = false;
+    this.deleteServices();
+    this.deleteServiceElement = null;
+  }
+
+  cancelSubmission(event: any) {
+    this.editServiceForm = false;
+    this.id = null;
+  }
+  submitSubmission(event: any) {
+    this.updateService(event);
+    this.editServiceForm = false;
+    this.id = null;
+  }
+
+  newRegisteration() {
+    this.createServiceForm = true;
+  }
+
+  cancelRegisteration(event: any) {
+    this.createServiceForm = false;
+  }
+
+  submitRegisteration(event: any) {
+    this.createServices(event);
+    this.createServiceForm = false;
   }
 
 }

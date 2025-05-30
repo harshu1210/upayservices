@@ -1,9 +1,15 @@
 <div class="services-container">
     <app-delete-dialog class="services-delete-dialog" *ngIf="deleteDialog" [message]="deleteMessage"
         (cancel)="cancelProcess($event)" (delete)="deleteProcess($event)"></app-delete-dialog>
-
+    <app-form class="services-form-edit-dialog" *ngIf="editServiceForm" [message]="formMessage"
+        [formCreation]="formCreation" (cancel)="cancelSubmission($event)"
+        (submit)="submitSubmission($event)"></app-form>
+    <app-form class="services-form-edit-dialog" *ngIf="createServiceForm" [message]="formMessage"
+        [formCreation]="newformCreation" (cancel)="cancelRegisteration($event)"
+        (submit)="submitRegisteration($event)"></app-form>
     <app-table class="services-table" header="Registered Services" [dataSource]="servicesData"
         [columnsToDisplay]="columnsToDisplay" [displayedColumnKeys]="displayedColumnKeys" [length]="length"
         [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [expandable]="true" [actions]="actions"
-        (refresh)="refresh($event)" (editing)="editElement($event)" (deleting)="deleteElement($event)"></app-table>
+        [pageServices]="pageServices" (register)="createElement()" (refresh)="refresh($event)"
+        (editing)="editElement($event)" (deleting)="deleteElement($event)"></app-table>
 </div>

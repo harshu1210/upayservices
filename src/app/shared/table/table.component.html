@@ -1,6 +1,18 @@
 <div class="table-container">
   <div class="table-container-header">
-    {{header}}
+    <mat-toolbar>
+      <span>{{header}}</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let service of pageServices" mat-menu-item (click)="menuService(service.value)">
+          <mat-icon>{{service.icon}}</mat-icon>
+          <span>{{service.label}}</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
   </div>
   <div class="table-container-table">
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
