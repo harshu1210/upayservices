@@ -1,0 +1,9 @@
+<mat-dialog-content class="mat-typography" style="postion:absolute;height:max-content;display:block;width:90%;">
+  <h3>Warning !!!</h3>
+  <p>{{message}}</p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-button mat-dialog-close (click)="cancelProcess(false)">Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="deleteProcess(true)">Delete</button>
+</mat-dialog-actions>

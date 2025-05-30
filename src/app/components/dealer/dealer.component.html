@@ -1,0 +1,8 @@
+<div class="dealers-container">
+  <app-delete-dialog class="dealers-delete-dialog" *ngIf="deleteDialog" [message]="deleteMessage"
+    (cancel)="cancelProcess($event)" (delete)="deleteProcess($event)"></app-delete-dialog>
+  <app-table header="Registered Dealers" [dataSource]="dealersData" [columnsToDisplay]="columnsToDisplay"
+    [displayedColumnKeys]="displayedColumnKeys" [length]="length" [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions" [formToDisplay]="formToDisplay" [expandable]="true" [actions]="actions"
+    (refresh)="refresh($event)" (editing)="editElement($event)" (deleting)="deleteElement($event)"></app-table>
+</div>
