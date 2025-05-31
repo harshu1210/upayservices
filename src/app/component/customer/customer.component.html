@@ -1,1 +1,14 @@
-<p>customer works!</p>
+<div class="customer-container">
+  <app-delete-dialog class="customer-delete-dialog" *ngIf="deleteDialog" [message]="deleteMessage"
+    (cancel)="cancelProcess($event)" (delete)="deleteProcess($event)"></app-delete-dialog>
+  <app-form class="customer-form-edit-dialog" *ngIf="editUserForm" [message]="formMessage"
+    [formCreation]="formCreation" (cancel)="cancelSubmission($event)" (submit)="submitSubmission($event)"></app-form>
+  <app-form class="customer-form-edit-dialog" *ngIf="createUserForm" [message]="formMessage"
+    [formCreation]="newformCreation" (cancel)="cancelRegisteration($event)"
+    (submit)="submitRegisteration($event)"></app-form>
+  <app-table header="Registered Customer" [dataSource]="userData" [columnsToDisplay]="columnsToDisplay"
+    [displayedColumnKeys]="displayedColumnKeys" [length]="length" [pageSize]="pageSize" [pageServices]="pageServices"
+    (register)="createElement()" [pageSizeOptions]="pageSizeOptions" [formToDisplay]="formToDisplay" [expandable]="true"
+    [actions]="actions" (refresh)="refresh($event)" (editing)="editElement($event)"
+    (deleting)="deleteElement($event)"></app-table>
+</div>

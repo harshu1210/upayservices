@@ -14,6 +14,10 @@ export class UserService {
     return this.http.get(`${this.baseUrl}getUser`, { params: { page: page.toString(), size: size.toString() } });
   }
 
+  getCustomerList(page: number, size: number) {
+    return this.http.get(`${this.baseUrl}getCustomer`, { params: { page: page.toString(), size: size.toString() } });
+  }
+
   updateUser(element: any) {
     return this.http.put(`${this.baseUrl}updateUser`, element);
   }
