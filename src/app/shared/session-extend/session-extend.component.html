@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>Session Expiring</h1>
+<div mat-dialog-content>Your session will expire soon. Do you want to extend it?</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="dialogRef.close('extend')">Extend</button>
+    <button mat-button (click)="dialogRef.close()">Logout</button>
+</div>

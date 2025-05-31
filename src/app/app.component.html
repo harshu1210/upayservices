@@ -1,11 +1,26 @@
-<!-- <header></header> -->
 <div class="mainContainer">
-    <div class="header"></div>
-    <div class="container">
-        <spinner></spinner>
-        <app-dealer></app-dealer>
-        <app-services></app-services>
-        <router-outlet></router-outlet>
-    </div>
-    <div class="footer"></div>
+  <div class="header">
+    <mat-toolbar>
+      <span>Upay Services</span>
+      <span class="example-spacer"></span>
+      <button *ngIf="token" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div *ngFor="let service of pageServices">
+          <button *ngIf="service.visible" mat-menu-item (click)="menuService(service.value)">
+            <span>{{service.label}}</span>
+          </button>
+        </div>
+      </mat-menu>
+    </mat-toolbar>
+  </div>
+  <div class="container">
+    <spinner></spinner>
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer">
+    © 2025 Upay Services. All rights reserved.
+    | Developed by <a href="mailto:charshal40@gmail.com">Harshal Chopade</a>
+  </div>
 </div>

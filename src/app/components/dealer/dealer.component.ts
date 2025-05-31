@@ -39,40 +39,113 @@ export class DealerComponent implements OnInit, AfterViewInit {
   deleteMessage: string = "";
   deleteDialog: boolean = false;
 
-  formCreation: { label: string, key: string, value: string, type: string, validation: string[] }[] = [
-    { label: "Company Name", key: "companyName", value: '', type: 'text', validation: ['required'] },
-    { label: "Buisness Email", key: "businessEmail", value: '', type: 'email', validation: ['required', 'email'] },
-    { label: "Buisness Phone Number", key: "businessPhoneNumber", value: '', type: 'text', validation: ['required'] },
-    { label: "Address", key: "address", value: '', type: 'textarea', validation: ['required'] },
-    { label: "Services", key: "services", value: '', type: 'select', validation: ['required'] },
-    { label: "GST Number", key: "gstNumber", value: '', type: 'text', validation: ['required'] },
-    { label: "Beneficiary Name", key: "bankDetails.beneficiaryName", value: '', type: 'text', validation: ['required'] },
-    { label: "Bank Name", key: "bankDetails.bankName", value: '', type: 'text', validation: ['required'] },
-    { label: "Branch Name", key: "bankDetails.branchName", value: '', type: 'text', validation: ['required'] },
-    { label: "Account Number", key: "bankDetails.accountNumber", value: '', type: 'text', validation: ['required'] },
-    { label: "IFSC Code", key: "bankDetails.ifsccode", value: '', type: 'text', validation: ['required'] },
-    { label: "UPI Id", key: "bankDetails.upiid", value: '', type: 'text', validation: ['required'] }
-  ];
-
-  newformCreation: { label: string, key: string, value: string, type: string, validation: string[] }[] = [
-    { label: "Company Name", key: "companyName", value: '', type: 'text', validation: ['required'] },
-    { label: "Buisness Email", key: "businessEmail", value: '', type: 'email', validation: ['required', 'email'] },
-    { label: "Buisness Phone Number", key: "businessPhoneNumber", value: '', type: 'text', validation: ['required'] },
-    { label: "Address", key: "address", value: '', type: 'textarea', validation: ['required'] },
-    { label: "Services", key: "services", value: '', type: 'select', validation: ['required'] },
-    { label: "GST Number", key: "gstNumber", value: '', type: 'text', validation: ['required'] },
-    { label: "Beneficiary Name", key: "bankDetails.beneficiaryName", value: '', type: 'text', validation: ['required'] },
-    { label: "Bank Name", key: "bankDetails.bankName", value: '', type: 'text', validation: ['required'] },
-    { label: "Branch Name", key: "bankDetails.branchName", value: '', type: 'text', validation: ['required'] },
-    { label: "Account Number", key: "bankDetails.accountNumber", value: '', type: 'text', validation: ['required'] },
-    { label: "IFSC Code", key: "bankDetails.ifsccode", value: '', type: 'text', validation: ['required'] },
-    { label: "UPI Id", key: "bankDetails.upiid", value: '', type: 'text', validation: ['required'] }
-  ];
   createDealerForm: boolean = false;
   editDealerForm: boolean = false;
   formMessage: string = '';
   services: any = [];
   pageServices: any = [{ label: "Register Dealer", icon: "add", value: "register" }]
+
+  formCreation: { label: string, key: string, value: string, type: string, validation: string[], options: string[] }[] = [
+    {
+      label: "Company Name", key: "companyName", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Buisness Email", key: "businessEmail", value: '', type: 'email', validation: ['required', 'email'],
+      options: []
+    },
+    {
+      label: "Buisness Phone Number", key: "businessPhoneNumber", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Address", key: "address", value: '', type: 'textarea', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Services", key: "services", value: '', type: 'select', validation: ['required'],
+      options: []
+    },
+    {
+      label: "GST Number", key: "gstNumber", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Beneficiary Name", key: "bankDetails.beneficiaryName", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Bank Name", key: "bankDetails.bankName", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Branch Name", key: "bankDetails.branchName", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Account Number", key: "bankDetails.accountNumber", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "IFSC Code", key: "bankDetails.ifsccode", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "UPI Id", key: "bankDetails.upiid", value: '', type: 'text', validation: ['required'],
+      options: []
+    }
+  ];
+
+  newformCreation: { label: string, key: string, value: string, type: string, validation: string[], options: string[] }[] = [
+    {
+      label: "Company Name", key: "companyName", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Buisness Email", key: "businessEmail", value: '', type: 'email', validation: ['required', 'email'],
+      options: []
+    },
+    {
+      label: "Buisness Phone Number", key: "businessPhoneNumber", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Address", key: "address", value: '', type: 'textarea', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Services", key: "services", value: '', type: 'select', validation: ['required'],
+      options: []
+    },
+    {
+      label: "GST Number", key: "gstNumber", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Beneficiary Name", key: "bankDetails.beneficiaryName", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Bank Name", key: "bankDetails.bankName", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Branch Name", key: "bankDetails.branchName", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "Account Number", key: "bankDetails.accountNumber", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "IFSC Code", key: "bankDetails.ifsccode", value: '', type: 'text', validation: ['required'],
+      options: []
+    },
+    {
+      label: "UPI Id", key: "bankDetails.upiid", value: '', type: 'text', validation: ['required'],
+      options: []
+    }
+  ];
 
   constructor(private dealersService: DealersService, private toasterService: ToasterService, private breakpointObserver: BreakpointObserver, private servicesService: ServicesService) {
     this.initializeBreakpointObserver();
@@ -81,6 +154,17 @@ export class DealerComponent implements OnInit, AfterViewInit {
   private updateDisplayedColumnKeys() {
     this.displayedColumnKeys = this.columnsToDisplay.map(col => col.key);
   }
+
+  updateOptionsByKey(formCreation: { label: string, key: string, value: string, type: string, validation: string[], options: string[] }[],key: string, newOptions: string[]): { label: string, key: string, value: string, type: string, validation: string[], options: string[] }[] {
+    const field = formCreation.find(item => item.key === key);
+    if (field) {
+      field.options = newOptions;
+    } else {
+      console.warn(`Field with key "${key}" not found.`);
+    }
+    return formCreation;
+  }
+
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -143,7 +227,8 @@ export class DealerComponent implements OnInit, AfterViewInit {
       for (let d of data) {
         this.services.push(d.label.trim());
       }
-      console.log(this.services)
+      this.updateOptionsByKey(this.formCreation,"services",this.services);
+      this.updateOptionsByKey(this.newformCreation,"services",this.services);
       this.toasterService.success("Services Fetched SuccessFully");
     }, (error: any) => {
       this.toasterService.error(error.message);
@@ -219,7 +304,12 @@ export class DealerComponent implements OnInit, AfterViewInit {
   }
 
   editElement(event: any) {
-    event.services = event.services.split(',').map((v: any) => v.trim()).filter((v: any) => v);
+    if (typeof event.services === 'string') {
+    event.services = event.services
+      .split(',')
+      .map((v: string) => v.trim())
+      .filter((v: string) => v);
+    }
     this.populateFormCreationValuesFromDealer(event);
     this.formMessage = "Editing Dealers Info";
     this.editDealerForm = true;
