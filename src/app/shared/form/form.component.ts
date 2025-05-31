@@ -40,24 +40,11 @@ export class FormComponent implements OnInit {
   }
 
   private setNestedValue(obj: any, path: string[], value: string, validations: string[], disabled?: boolean) {
-  noSpacesValidator(control: AbstractControl): ValidationErrors | null {
-    return (control.value || '').includes(' ') ? { noSpaces: true } : null;
-  }
-  noCapsValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value || '';
-    const hasUpperCase = /[A-Z]/.test(value);
-    return hasUpperCase ? { noCaps: true } : null;
-  }
-
-  private setNestedValue(obj: any, path: string[], value: string, validations: string[], disabled?: boolean) {
     let current = obj;
     for (let i = 0; i < path.length - 1; i++) {
       current[path[i]] = current[path[i]] || {};
       current = current[path[i]];
     }
-
-    const control = new FormControl({ value, disabled: !!disabled }, this.mapValidators(validations));
-    current[path[path.length - 1]] = control;
 
     const control = new FormControl({ value, disabled: !!disabled }, this.mapValidators(validations));
     current[path[path.length - 1]] = control;
