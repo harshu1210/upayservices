@@ -3,16 +3,17 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionExtendComponent } from '../shared/session-extend/session-extend.component';
 import { StorageService } from './storage.service';
+import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService implements CanActivate{
 
   private refreshInterval: any;
   private popupShown = false;
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private StorageService:StorageService) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private StorageService:StorageService, private router:Router) { }
 
   startSession(token: string) {
     this.StorageService.setItem('token', token)
@@ -63,5 +64,40 @@ export class AuthService {
     if (!token) return false;
     const payload = JSON.parse(atob(token.split('.')[1]));
     return payload.role === role;
+  }
+
+  private roleAccess: { [key: string]: string[] } = {
+    SUPERADMIN: ["customerPage", "ordersPage", "userPage", "dealerPage", "servicePage"],
+    ADMIN: ["customerPage", "ordersPage", "userPage"],
+    USER: ["customerPage", "ordersPage"],
+    CUSTOMER: ["packageTrackingPage"]
+  };
+
+  // Simulate retrieving userRole from RoleID (localStorage or JWT)
+  private getUserRole(): string {
+    const token = this.StorageService.extractToken();
+    if(token.includes("SUPERADMIN")){
+      return "SUPERADMIN";
+    }else if(token.includes("ADMIN")){
+      return "ADMIN"
+    }else if(token.includes("USER")){
+      return "USER"
+    }else if(token.includes("CUSTOMER")){
+      return "CUSTOMER"
+    }
+    return "";
+  }
+
+  canActivate(route: ActivatedRouteSnapshot): boolean | UrlTree {
+    const requiredPage = route.data['page'] as string;
+    const userRole = this.getUserRole();
+    const allowedPages = this.roleAccess[userRole] || [];
+    console.log(allowedPages)
+
+    if (allowedPages.includes(requiredPage)) {
+      return true;
+    }
+
+    return this.router.parseUrl('/not-found'); // or redirect to /login
   }
 }

@@ -1,0 +1,30 @@
+.wildcard-container {
+  text-align: center;
+  padding: 100px 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  font-size: 100px;
+  margin: 0;
+  color: #ff6f61;
+}
+
+p {
+  font-size: 20px;
+  margin: 20px 0;
+  color: #555;
+}
+
+.home-button {
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.home-button:hover {
+  background-color: #0056b3;
+}

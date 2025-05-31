@@ -29,6 +29,9 @@ import { WildCardComponent } from './shared/wild-card/wild-card.component';
 import { UserComponent } from './components/user/user.component';
 import { SessionExtendComponent } from './shared/session-extend/session-extend.component';
 import { LoginComponent } from './components/login/login.component';
+import { CustomerComponent } from './component/customer/customer.component';
+import { OrderComponent } from './component/order/order.component';
+import { PackageTrackingComponent } from './component/package-tracking/package-tracking.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +46,9 @@ import { LoginComponent } from './components/login/login.component';
     UserComponent,
     SessionExtendComponent,
     LoginComponent,
+    CustomerComponent,
+    OrderComponent,
+    PackageTrackingComponent,
   ],
   imports: [
     BrowserModule,

@@ -15,9 +15,6 @@
                 <input *ngIf="field.type === 'password'" matInput type="password" [formControl]="getFormControl(field.key)"
                     [placeholder]="'Enter ' + field.label" />
 
-                <input *ngIf="field.type === 'password'" matInput type="password" [formControl]="getFormControl(field.key)"
-                    [placeholder]="'Enter ' + field.label" />
-
                 <textarea *ngIf="field.type === 'textarea'" matInput [formControl]="getFormControl(field.key)"
                     [placeholder]="'Enter ' + field.label"></textarea>
 

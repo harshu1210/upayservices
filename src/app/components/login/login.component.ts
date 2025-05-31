@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { StorageService } from 'src/app/services/storage.service';
 import { ToasterService } from 'src/app/services/toaster.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
     ];
   token:string="";
 
-  constructor(private userService:UserService, private authService:AuthService, private toasterService:ToasterService, private router:Router) { }
+  constructor(private userService:UserService, private authService:AuthService, private toasterService:ToasterService, private router:Router, private storageService:StorageService) { }
 
   ngOnInit(): void {
   
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
   authToken() {
     if (this.token) {
       this.authService.startSession(this.token)
-      this.router.navigate(["/customerPage"])
+      this.storageService.extractToken().includes("CUSTOMER") ? this.router.navigate(["packageTrackingPage"]) : this.router.navigate(["customerPage"])
     }
   }
 }
