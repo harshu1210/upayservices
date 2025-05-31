@@ -1,0 +1,67 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { SessionExtendComponent } from '../shared/session-extend/session-extend.component';
+import { StorageService } from './storage.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  private refreshInterval: any;
+  private popupShown = false;
+
+  constructor(private http: HttpClient, private dialog: MatDialog, private StorageService:StorageService) { }
+
+  startSession(token: string) {
+    this.StorageService.setItem('token', token)
+    this.scheduleRefresh(25 * 60 * 1000); // 25 minutes
+  }
+
+  private scheduleRefresh(ms: number) {
+    if (this.refreshInterval) clearTimeout(this.refreshInterval);
+    this.refreshInterval = setTimeout(() => this.showExtendPopup(), ms);
+  }
+
+  private showExtendPopup() {
+    if (this.popupShown) return;
+    this.popupShown = true;
+    const dialogRef = this.dialog.open(SessionExtendComponent);
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+      this.popupShown = false;
+      if (result === 'extend') {
+        this.http.post('http://localhost:8080/api/upayServices/users/refresh', {}).subscribe((res:any) => {
+          this.startSession(res.refresh); // Reschedule with new token
+        });
+      } else {
+        this.logout(); // Session expired
+      }
+    });
+  }
+
+  logout() {
+    this.StorageService.removeItem('token');
+    clearTimeout(this.refreshInterval);
+    // redirect to login
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    if (!token) return true;
+    const expiry = JSON.parse(atob(token.split('.')[1])).exp;
+    return Date.now() > expiry * 1000;
+  }
+
+  hasRole(role: string): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.role === role;
+  }
+}

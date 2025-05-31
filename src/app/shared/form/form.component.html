@@ -12,11 +12,18 @@
                 <input *ngIf="field.type === 'text'" matInput type="text" [formControl]="getFormControl(field.key)"
                     [placeholder]="'Enter ' + field.label" />
 
+                <input *ngIf="field.type === 'password'" matInput type="password" [formControl]="getFormControl(field.key)"
+                    [placeholder]="'Enter ' + field.label" />
+
                 <textarea *ngIf="field.type === 'textarea'" matInput [formControl]="getFormControl(field.key)"
                     [placeholder]="'Enter ' + field.label"></textarea>
 
                 <mat-select *ngIf="field.type == 'select'" [formControl]="getFormControl(field.key)" multiple>
-                    <mat-option *ngFor="let service of services" [value]="service">{{service}}</mat-option>
+                    <mat-option *ngFor="let service of field.options" [value]="service">{{service}}</mat-option>
+                </mat-select>
+
+                <mat-select *ngIf="field.type == 'selectSingle'" [formControl]="getFormControl(field.key)">
+                    <mat-option *ngFor="let service of field.options" [value]="service">{{service}}</mat-option>
                 </mat-select>
 
                 <!-- Validation errors -->
@@ -28,6 +35,11 @@
                     *ngIf="getFormControl(field.key).hasError('email') && !getFormControl(field.key).hasError('required')">
                     Please enter a valid {{ field.label }}
                 </mat-error>
+
+                <mat-error
+                    *ngIf="(getFormControl(field.key).hasError('noSpaces') || getFormControl(field.key).hasError('noCaps')) && !getFormControl(field.key).hasError('required')">
+                    Please enter a valid {{ field.label }} no spaces, no Capital letters allowed.
+                </mat-error>
             </mat-form-field>
         </div>
         <p>
@@ -36,7 +48,8 @@
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
-    <button mat-button mat-dialog-close (click)="cancelProcess(false)">Cancel</button>
+    <button *ngIf="forgotPassword" [disabled]="form.invalid" mat-button (click)="forgotPasswordFunc()">Forgot Password</button>
+    <button *ngIf="cancelVisible" mat-button mat-dialog-close (click)="cancelProcess(false)">Cancel</button>
     <button mat-button color="primary" (click)="onSubmit()" [mat-dialog-close]="true" [disabled]="form.invalid"
         cdkFocusInitial>Submit</button>
 </mat-dialog-actions>

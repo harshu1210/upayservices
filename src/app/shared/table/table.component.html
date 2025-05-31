@@ -39,8 +39,9 @@
                 (click)="editElement(element)"><mat-icon>edit</mat-icon></button>
               <button mat-icon-button color="warn" (click)="deleteElement(element)"><mat-icon>delete</mat-icon></button>
             </p>
+          <br>
             <div *ngFor="let field of formToDisplay" class="expanded-row-field">
-              <div style="margin:1em;"> <strong>{{field.label}}</strong>: {{getNestedValue(element, field.key)}} </div>
+              <div style="margin:1em;"> <strong>{{field.label}}</strong>: {{getNestedValue(element, field.key) == true ? 'Yes' : getNestedValue(element, field.key) == false ? 'NO' : getNestedValue(element, field.key)}} </div>
             </div>
           </div>
         </td>

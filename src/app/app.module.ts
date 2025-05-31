@@ -25,6 +25,10 @@ import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.comp
 import { FormComponent } from './shared/form/form.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
+import { WildCardComponent } from './shared/wild-card/wild-card.component';
+import { UserComponent } from './components/user/user.component';
+import { SessionExtendComponent } from './shared/session-extend/session-extend.component';
+import { LoginComponent } from './components/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +38,11 @@ import { MatMenuModule } from '@angular/material/menu';
     TableComponent,
     ServicesComponent,
     DeleteDialogComponent,
-    FormComponent
+    FormComponent,
+    WildCardComponent,
+    UserComponent,
+    SessionExtendComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
