@@ -24,11 +24,6 @@
 
                 <mat-select *ngIf="field.type == 'selectSingle'" [formControl]="getFormControl(field.key)">
                     <mat-option *ngFor="let service of field.options" [value]="service">{{service}}</mat-option>
-                    <mat-option *ngFor="let service of field.options" [value]="service">{{service}}</mat-option>
-                </mat-select>
-
-                <mat-select *ngIf="field.type == 'selectSingle'" [formControl]="getFormControl(field.key)">
-                    <mat-option *ngFor="let service of field.options" [value]="service">{{service}}</mat-option>
                 </mat-select>
 
                 <!-- Validation errors -->
@@ -39,11 +34,6 @@
                 <mat-error
                     *ngIf="getFormControl(field.key).hasError('email') && !getFormControl(field.key).hasError('required')">
                     Please enter a valid {{ field.label }}
-                </mat-error>
-
-                <mat-error
-                    *ngIf="(getFormControl(field.key).hasError('noSpaces') || getFormControl(field.key).hasError('noCaps')) && !getFormControl(field.key).hasError('required')">
-                    Please enter a valid {{ field.label }} no spaces, no Capital letters allowed.
                 </mat-error>
 
                 <mat-error
