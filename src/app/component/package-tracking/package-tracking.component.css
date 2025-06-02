@@ -1,0 +1,4 @@
+::ng-deep .mat-step-text-label {
+    display: flex;
+    align-items: center;
+}

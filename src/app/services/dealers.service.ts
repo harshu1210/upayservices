@@ -18,6 +18,13 @@ export class DealersService {
     return this.http.get(`${this.baseUrl}getDealers`, { params: { page: page.toString(), size: size.toString() }, headers: headers });
   }
 
+  getDealersCompanyName() {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageService.getItem('token')}`
+    });
+    return this.http.get(`${this.baseUrl}getDealersCompanyName`, { headers: headers });
+  }
+
   updateDealer(element: any) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.storageService.getItem('token')}`

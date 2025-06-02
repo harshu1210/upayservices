@@ -18,6 +18,13 @@ export class UserService {
     return this.http.get(`${this.baseUrl}getUser`, { params: { page: page.toString(), size: size.toString() }, headers: headers });
   }
 
+  getCustomerIDS() {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.storageService.getItem('token')}`
+    });
+    return this.http.get(`${this.baseUrl}getCustomerIDs`, { headers: headers });
+  }
+
   getCustomerList(page: number, size: number) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.storageService.getItem('token')}`

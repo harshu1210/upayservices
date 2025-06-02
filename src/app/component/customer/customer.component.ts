@@ -25,6 +25,7 @@ export class CustomerComponent implements OnInit {
     { label: "Email", key: "email" },
     { label: "User Name", key: "username" },
     { label: "Role", key: "role" },
+    { label: "Customer ID", key: "customerID" }
   ];
   actions: boolean = false;
   deleteUserElement: UserElement | null = null;
@@ -54,7 +55,7 @@ export class CustomerComponent implements OnInit {
       options: [], disabled: true
     },
     {
-      label: "Phone Number", key: "phoneNumber", value: '', type: 'text', validation: ['required'],
+      label: "Phone Number", key: "phoneNumber", value: '', type: 'text', validation: ['required', 'phoneNumber'],
       options: [], disabled: true
     }
   ];
@@ -77,8 +78,8 @@ export class CustomerComponent implements OnInit {
       options: [], disabled: true
     },
     {
-      label: "Phone Number", key: "phoneNumber", value: '', type: 'text', validation: ['required'],
-      options: [], disabled: true
+      label: "Phone Number", key: "phoneNumber", value: '', type: 'text', validation: ['required', 'phoneNumber'],
+      options: [], disabled: false
     }
   ];
 
@@ -107,12 +108,13 @@ export class CustomerComponent implements OnInit {
       if (result.breakpoints[Breakpoints.XSmall]) {
         this.columnsToDisplay = [
           { label: 'ID', key: 'id' },
-          { label: 'User Name', key: 'username' }
+          { label: 'Customer ID', key: 'customerID' }
         ];
         this.actions = true;
       } else if (result.breakpoints[Breakpoints.Large] || result.breakpoints[Breakpoints.XLarge] || result.breakpoints[Breakpoints.Medium] || result.breakpoints[Breakpoints.Small]) {
         this.columnsToDisplay = [
           { label: 'ID', key: 'id' },
+          { label: 'Customer ID', key: 'customerID' },
           { label: 'User Name', key: 'username' },
           { label: 'Email', key: 'email' },
           { label: 'Role', key: 'role' },
@@ -265,5 +267,5 @@ export interface UserElement {
   email: string,
   role: string,
   active: boolean,
-  phoneNumber:string
+  phoneNumber: string
 }

@@ -1,1 +1,37 @@
-<p>package-tracking works!</p>
+<div style="margin-bottom:1rem;">
+    <mat-toolbar>
+        <span>Package Tracker</span>
+    </mat-toolbar>
+</div>
+<div *ngFor="let item of orders" style="position:relative;width:100%;">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <strong>Order ID: </strong>{{item.orderID}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>
+                <mat-card-content>
+                    <mat-progress-bar mode="determinate" [value]="getValue(item.packageStatus)">
+                    </mat-progress-bar>
+                </mat-card-content>
+                <mat-card-content>
+                    <mat-vertical-stepper [selectedIndex]="getPackageStatus(item.packageStatus)">
+                        <ng-container *ngFor="let step of packageStatus; let i = index">
+                            <mat-step [completed]="step.completed">
+                                <ng-template style="display:flex;align-items:center;" matStepLabel>
+                                    <mat-icon>{{ step.icon }}</mat-icon>
+                                    {{ step.label }}
+                                </ng-template>
+                                <ng-template matStepContent>
+                                    {{ item.orderHistory[step.key] }}
+                                </ng-template>
+                            </mat-step>
+                        </ng-container>
+                    </mat-vertical-stepper>
+                </mat-card-content>
+            </p>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

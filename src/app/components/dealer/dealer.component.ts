@@ -55,7 +55,7 @@ export class DealerComponent implements OnInit, AfterViewInit {
       options: []
     },
     {
-      label: "Buisness Phone Number", key: "businessPhoneNumber", value: '', type: 'text', validation: ['required'],
+      label: "Buisness Phone Number", key: "businessPhoneNumber", value: '', type: 'text', validation: ['required','phoneNumber'],
       options: []
     },
     {
@@ -106,7 +106,7 @@ export class DealerComponent implements OnInit, AfterViewInit {
       options: []
     },
     {
-      label: "Buisness Phone Number", key: "businessPhoneNumber", value: '', type: 'text', validation: ['required'],
+      label: "Buisness Phone Number", key: "businessPhoneNumber", value: '', type: 'text', validation: ['required','phoneNumber'],
       options: []
     },
     {

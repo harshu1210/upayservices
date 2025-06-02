@@ -32,6 +32,12 @@ import { LoginComponent } from './components/login/login.component';
 import { CustomerComponent } from './component/customer/customer.component';
 import { OrderComponent } from './component/order/order.component';
 import { PackageTrackingComponent } from './component/package-tracking/package-tracking.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NgxFileDropModule } from 'ngx-file-drop';
+import { MatCardModule } from '@angular/material/card';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +73,13 @@ import { PackageTrackingComponent } from './component/package-tracking/package-t
     MatInputModule,
     MatDialogModule,
     MatSelectModule,
-    MatMenuModule
+    MatMenuModule,
+    MatAutocompleteModule,
+    NgxFileDropModule,
+    MatCardModule,
+    MatStepperModule,
+    MatProgressBarModule,
+    MatExpansionModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -26,7 +26,8 @@
           <td mat-cell *matCellDef="let element">
             <!-- Put your actions here, e.g. buttons -->
             <button mat-icon-button color="primary" (click)="editElement(element)"><mat-icon>edit</mat-icon></button>
-            <button mat-icon-button color="warn" (click)="deleteElement(element)"><mat-icon>delete</mat-icon></button>
+            <button *ngIf="deletePermission" mat-icon-button color="warn"
+              (click)="deleteElement(element)"><mat-icon>delete</mat-icon></button>
           </td>
         </ng-template>
       </ng-container>
@@ -37,11 +38,13 @@
           <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <p *ngIf="actions"><button mat-icon-button color="primary"
                 (click)="editElement(element)"><mat-icon>edit</mat-icon></button>
-              <button mat-icon-button color="warn" (click)="deleteElement(element)"><mat-icon>delete</mat-icon></button>
+              <button *ngIf="deletePermission" mat-icon-button color="warn"
+                (click)="deleteElement(element)"><mat-icon>delete</mat-icon></button>
             </p>
-          <br>
+            <br>
             <div *ngFor="let field of formToDisplay" class="expanded-row-field">
-              <div style="margin:1em;"> <strong>{{field.label}}</strong>: {{getNestedValue(element, field.key) == true ? 'Yes' : getNestedValue(element, field.key) == false ? 'NO' : getNestedValue(element, field.key)}} </div>
+              <div style="margin:1em;"> <strong>{{field.label}}</strong>: {{getNestedValue(element, field.key) == true ?
+                'Yes' : getNestedValue(element, field.key) == false ? 'NO' : getNestedValue(element, field.key)}} </div>
             </div>
           </div>
         </td>

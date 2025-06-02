@@ -2,6 +2,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-table',
@@ -30,18 +31,19 @@ export class TableComponent implements OnInit {
   @Input() actions: boolean = false;
   @Input() pageServices: any = [];
   @ViewChild(MatTable) table!: MatTable<any>;
-
   @Output() refresh: EventEmitter<PageEvent> = new EventEmitter();
   @Output() editing: EventEmitter<any> = new EventEmitter();
   @Output() deleting: EventEmitter<any> = new EventEmitter();
   @Output() register: EventEmitter<any> = new EventEmitter();
   expandedElement: any = null;
+  deletePermission: boolean = false;
 
-  constructor() {
+  constructor(private storageService: StorageService) {
 
   }
 
   ngOnInit(): void {
+    this.deletePermission = this.storageService.extractToken().includes("SUPERADMIN") || this.storageService.extractToken().includes("ADMIN");
   }
 
   updatePage(event: any) {

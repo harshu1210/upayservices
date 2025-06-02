@@ -12,7 +12,7 @@ export class ToasterService {
       duration,
       panelClass: ['snackbar-success'],
       horizontalPosition: 'right',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -21,7 +21,7 @@ export class ToasterService {
       duration,
       panelClass: ['snackbar-error'],
       horizontalPosition: 'right',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -30,7 +30,7 @@ export class ToasterService {
       duration,
       panelClass: ['snackbar-info'],
       horizontalPosition: 'right',
-      verticalPosition: 'top',
+      verticalPosition: 'bottom',
     });
   }
 }

@@ -1,29 +1,80 @@
 <mat-dialog-content class="mat-typography" style="position:relative;height:90%;display:block;width:90%;overflow:auto;">
     <h3>{{message}}</h3>
     <form [formGroup]="form" style="display:flex;flex-wrap:wrap;gap:10px;">
-        <div *ngFor="let field of formCreation">
-            <mat-form-field class="example-full-width" appearance="outline">
+        <div *ngFor="let field of formCreation" [ngClass]="field.type === 'multiFiles' ? 'relative' : ''">
+            <!-- Multi File Input (without mat-form-field) -->
+            <div *ngIf="field.type === 'multiFiles'" class="file-upload"
+                style="position:relative;width:100%;display:flex;flex-direction:column;gap:10px;top:50%;left:50%;transform:translate(-50%,-50%);">
+                <label>{{ field.label }}</label>
+
+                <ngx-file-drop [dropZoneLabel]="'Drop files here'" (onFileDrop)="onFilesDropped($event, field.key)">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                        <div class="drop-area" (click)="openFileSelector()">
+                            Click or drop files here
+                        </div>
+                    </ng-template>
+                </ngx-file-drop>
+
+                <!-- Show uploaded files with remove option -->
+                <div *ngIf="uploadedFiles[field.key]?.length">
+                    <ul>
+                        <li *ngFor="let file of uploadedFiles[field.key]; let i = index">
+                            <div style="display:flex;align-items:center;">
+                                {{ file.name }}
+                                <button mat-icon-button color="warn"
+                                    (click)="removeFile(field.key, i)"><mat-icon>delete</mat-icon></button>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <mat-error *ngIf="getFormControl(field.key).hasError('required')">
+                    {{ field.label }} is <strong>required</strong>
+                </mat-error>
+            </div>
+
+            <mat-form-field *ngIf="field.type !== 'multiFiles'" appearance="outline" class="example-full-width">
                 <mat-label>{{ field.label }}</mat-label>
 
+                <!-- Auto-complete -->
+                <input *ngIf="field.type === 'auto'" matInput type="text" [formControl]="getFormControl(field.key)"
+                    [matAutocomplete]="auto" (input)="filterAutocomplete(field)"
+                    [placeholder]="'Enter ' + field.label" />
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions[field.key]" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+
+                <!-- Email -->
                 <input *ngIf="field.type === 'email'" matInput type="email" [formControl]="getFormControl(field.key)"
                     [placeholder]="'Enter ' + field.label" />
 
-                <!-- Add other input types if needed -->
+                <!-- Text -->
                 <input *ngIf="field.type === 'text'" matInput type="text" [formControl]="getFormControl(field.key)"
                     [placeholder]="'Enter ' + field.label" />
 
-                <input *ngIf="field.type === 'password'" matInput type="password" [formControl]="getFormControl(field.key)"
-                    [placeholder]="'Enter ' + field.label" />
+                <!-- Password -->
+                <input *ngIf="field.type === 'password'" matInput type="password"
+                    [formControl]="getFormControl(field.key)" [placeholder]="'Enter ' + field.label" />
 
+                <!-- Textarea -->
                 <textarea *ngIf="field.type === 'textarea'" matInput [formControl]="getFormControl(field.key)"
                     [placeholder]="'Enter ' + field.label"></textarea>
 
-                <mat-select *ngIf="field.type == 'select'" [formControl]="getFormControl(field.key)" multiple>
-                    <mat-option *ngFor="let service of field.options" [value]="service">{{service}}</mat-option>
+                <!-- Select multiple -->
+                <mat-select *ngIf="field.type === 'select'" multiple [formControl]="getFormControl(field.key)">
+                    <mat-option *ngFor="let option of field.options" [value]="option">
+                        {{ option }}
+                    </mat-option>
                 </mat-select>
 
-                <mat-select *ngIf="field.type == 'selectSingle'" [formControl]="getFormControl(field.key)">
-                    <mat-option *ngFor="let service of field.options" [value]="service">{{service}}</mat-option>
+                <!-- Select single -->
+                <mat-select *ngIf="field.type === 'selectSingle'" [formControl]="getFormControl(field.key)">
+                    <mat-option *ngFor="let option of field.options" [value]="option">
+                        {{ option }}
+                    </mat-option>
                 </mat-select>
 
                 <!-- Validation errors -->
@@ -31,25 +82,33 @@
                     {{ field.label }} is <strong>required</strong>
                 </mat-error>
 
-                <mat-error
-                    *ngIf="getFormControl(field.key).hasError('email') && !getFormControl(field.key).hasError('required')">
+                <mat-error *ngIf="getFormControl(field.key).hasError('email')">
                     Please enter a valid {{ field.label }}
                 </mat-error>
 
-                <mat-error
-                    *ngIf="(getFormControl(field.key).hasError('noSpaces') || getFormControl(field.key).hasError('noCaps')) && !getFormControl(field.key).hasError('required')">
-                    Please enter a valid {{ field.label }} no spaces, no Capital letters allowed.
+                <mat-error *ngIf="getFormControl(field.key).hasError('noSpaces')">
+                    No spaces allowed in {{ field.label }}
+                </mat-error>
+
+                <mat-error *ngIf="getFormControl(field.key).hasError('noCaps')">
+                    No capital letters allowed in {{ field.label }}
+                </mat-error>
+
+                <mat-error *ngIf="getFormControl(field.key).hasError('invalidPhoneNumber')">
+                    Invalid phone number for {{ field.label }}
                 </mat-error>
             </mat-form-field>
-        </div>
-        <p>
 
-        </p>
+        </div>
     </form>
 </mat-dialog-content>
+
 <mat-dialog-actions align="center">
-    <button *ngIf="forgotPassword" [disabled]="form.invalid" mat-button (click)="forgotPasswordFunc()">Forgot Password</button>
-    <button *ngIf="cancelVisible" mat-button mat-dialog-close (click)="cancelProcess(false)">Cancel</button>
-    <button mat-button color="primary" (click)="onSubmit()" [mat-dialog-close]="true" [disabled]="form.invalid"
-        cdkFocusInitial>Submit</button>
+    <button *ngIf="forgotPassword" mat-button (click)="forgotPasswordFunc()" [disabled]="form.invalid">Forgot
+        Password</button>
+    <button *ngIf="cancelVisible" mat-button mat-dialog-close (click)="cancelProcess()">Cancel</button>
+    <button mat-button color="primary" [mat-dialog-close]="true" (click)="onSubmit()" [disabled]="form.invalid"
+        cdkFocusInitial>
+        Submit
+    </button>
 </mat-dialog-actions>

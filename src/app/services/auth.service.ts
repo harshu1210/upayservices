@@ -8,12 +8,12 @@ import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/r
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements CanActivate{
+export class AuthService implements CanActivate {
 
   private refreshInterval: any;
   private popupShown = false;
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private StorageService:StorageService, private router:Router) { }
+  constructor(private http: HttpClient, private dialog: MatDialog, private StorageService: StorageService, private router: Router) { }
 
   startSession(token: string) {
     this.StorageService.setItem('token', token)
@@ -30,10 +30,10 @@ export class AuthService implements CanActivate{
     this.popupShown = true;
     const dialogRef = this.dialog.open(SessionExtendComponent);
 
-    dialogRef.afterClosed().subscribe((result:any) => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       this.popupShown = false;
       if (result === 'extend') {
-        this.http.post('http://localhost:8080/api/upayServices/users/refresh', {}).subscribe((res:any) => {
+        this.http.post('http://localhost:8080/api/upayServices/users/refresh', {}).subscribe((res: any) => {
           this.startSession(res.refresh); // Reschedule with new token
         });
       } else {
@@ -67,7 +67,7 @@ export class AuthService implements CanActivate{
   }
 
   private roleAccess: { [key: string]: string[] } = {
-    SUPERADMIN: ["customerPage", "ordersPage", "userPage", "dealerPage", "servicePage"],
+    SUPERADMIN: ["userPage", "dealerPage", "servicePage"],
     ADMIN: ["customerPage", "ordersPage", "userPage"],
     USER: ["customerPage", "ordersPage"],
     CUSTOMER: ["packageTrackingPage"]
@@ -76,13 +76,13 @@ export class AuthService implements CanActivate{
   // Simulate retrieving userRole from RoleID (localStorage or JWT)
   private getUserRole(): string {
     const token = this.StorageService.extractToken();
-    if(token.includes("SUPERADMIN")){
+    if (token.includes("SUPERADMIN")) {
       return "SUPERADMIN";
-    }else if(token.includes("ADMIN")){
+    } else if (token.includes("ADMIN")) {
       return "ADMIN"
-    }else if(token.includes("USER")){
+    } else if (token.includes("USER")) {
       return "USER"
-    }else if(token.includes("CUSTOMER")){
+    } else if (token.includes("CUSTOMER")) {
       return "CUSTOMER"
     }
     return "";
