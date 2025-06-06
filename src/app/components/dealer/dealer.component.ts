@@ -7,9 +7,10 @@ import { finalize } from 'rxjs';
 import { ServicesService } from 'src/app/services/services.service';
 
 @Component({
-  selector: 'app-dealer',
-  templateUrl: './dealer.component.html',
-  styleUrls: ['./dealer.component.css']
+    selector: 'app-dealer',
+    templateUrl: './dealer.component.html',
+    styleUrls: ['./dealer.component.css'],
+    standalone: false
 })
 export class DealerComponent implements OnInit, AfterViewInit {
 

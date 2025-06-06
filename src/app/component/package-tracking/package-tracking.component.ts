@@ -3,9 +3,10 @@ import { OrderService } from 'src/app/services/order.service';
 import { ToasterService } from 'src/app/services/toaster.service';
 
 @Component({
-  selector: 'app-package-tracking',
-  templateUrl: './package-tracking.component.html',
-  styleUrls: ['./package-tracking.component.css']
+    selector: 'app-package-tracking',
+    templateUrl: './package-tracking.component.html',
+    styleUrls: ['./package-tracking.component.css'],
+    standalone: false
 })
 export class PackageTrackingComponent implements OnInit {
 

@@ -6,9 +6,10 @@ import { ServicesService } from 'src/app/services/services.service';
 import { ToasterService } from 'src/app/services/toaster.service';
 
 @Component({
-  selector: 'app-services',
-  templateUrl: './services.component.html',
-  styleUrls: ['./services.component.css']
+    selector: 'app-services',
+    templateUrl: './services.component.html',
+    styleUrls: ['./services.component.css'],
+    standalone: false
 })
 export class ServicesComponent implements OnInit, AfterViewInit {
 

@@ -6,9 +6,10 @@ import { ToasterService } from 'src/app/services/toaster.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.css']
+    selector: 'app-customer',
+    templateUrl: './customer.component.html',
+    styleUrls: ['./customer.component.css'],
+    standalone: false
 })
 export class CustomerComponent implements OnInit {
 
