@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SessionExtendComponent } from '../shared/session-extend/session-extend.component';
 import { StorageService } from './storage.service';
-import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements CanActivate {
+export class AuthService  {
 
   private refreshInterval: any;
   private popupShown = false;
