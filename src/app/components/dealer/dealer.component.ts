@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { DealersService } from 'src/app/services/dealers.service';
 import { ToasterService } from 'src/app/services/toaster.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';

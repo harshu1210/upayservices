@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { finalize } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { ToasterService } from 'src/app/services/toaster.service';

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SessionExtendComponent } from '../shared/session-extend/session-extend.component';
 import { StorageService } from './storage.service';
 import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';

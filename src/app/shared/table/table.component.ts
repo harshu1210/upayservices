@@ -1,7 +1,7 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { MatTable } from '@angular/material/table';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
+import { MatLegacyTable as MatTable } from '@angular/material/legacy-table';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
