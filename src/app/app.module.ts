@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { DealerComponent } from './components/dealer/dealer.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -38,54 +38,47 @@ import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-c
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 import {MatExpansionModule} from '@angular/material/expansion';
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    DealerComponent,
-    SpinnerComponent,
-    TableComponent,
-    ServicesComponent,
-    DeleteDialogComponent,
-    FormComponent,
-    WildCardComponent,
-    UserComponent,
-    SessionExtendComponent,
-    LoginComponent,
-    CustomerComponent,
-    OrderComponent,
-    PackageTrackingComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatInputModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatAutocompleteModule,
-    NgxFileDropModule,
-    MatCardModule,
-    MatStepperModule,
-    MatProgressBarModule,
-    MatExpansionModule
-  ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoadingInterceptor,
-    multi: true
-  }],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        DealerComponent,
+        SpinnerComponent,
+        TableComponent,
+        ServicesComponent,
+        DeleteDialogComponent,
+        FormComponent,
+        WildCardComponent,
+        UserComponent,
+        SessionExtendComponent,
+        LoginComponent,
+        CustomerComponent,
+        OrderComponent,
+        PackageTrackingComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatInputModule,
+        MatDialogModule,
+        MatSelectModule,
+        MatMenuModule,
+        MatAutocompleteModule,
+        NgxFileDropModule,
+        MatCardModule,
+        MatStepperModule,
+        MatProgressBarModule,
+        MatExpansionModule], providers: [{
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoadingInterceptor,
+            multi: true
+        }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
